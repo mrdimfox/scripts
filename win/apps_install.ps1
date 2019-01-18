@@ -13,7 +13,7 @@
 #>
 
 $ACTIVITY_NAME = "Apps installation"
-$STEPS_COUNT = 13
+$STEPS_COUNT = 14
 
 $ErrorActionPreference = "Stop"
 
@@ -109,8 +109,20 @@ Install-App -Name "7zip" -Cmd "7z"
 # Install git
 $progress.NextStep("Install git with openssh")
 Install-App -Name "git-with-openssh" -Cmd "git"
+Install-App -Name "git-lfs" -Cmd "git lfs"
 [environment]::setEnvironmentVariable('HOME', $Env:UserProfile, 'User')
+[environment]::setEnvironmentVariable('GIT_SSH', (resolve-path (scoop which ssh)), 'User')
 New-Directory -Path (Join-Path $Env:UserProfile .ssh)
+
+# Enable SSH Agent
+$progress.NextStep("Enable SSH Agent")
+$isAgentStarted = `
+    !((Get-Service ssh-agent | Select-Object -Property StartType).StartType == "Disabled")
+
+if (!($isAgentStarted)) {
+    Set-Service -Name ssh-agent -StartupType Automatic
+    Start-Service ssh-agent
+}
 
 # Add 'extras' scoop bucket
 $progress.NextStep("Add 'extras' scoop bucket")
