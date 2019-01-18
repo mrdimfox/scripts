@@ -3,7 +3,7 @@
         This script installs some apps and dev tools using Scoop
     
     .DESCRIPTION
-        It installs 7zip, git, miniconda3, lvm (clang), mingw64 (gcc),
+        It installs 7zip, git, miniconda3, llvm (clang), mingw64 (gcc),
         gcc-arm-none-eabi, rust and Windows Build Tools.
 
     .NOTE
@@ -107,8 +107,10 @@ $progress.NextStep("Install 7zip")
 Install-App -Name "7zip" -Cmd "7z"
 
 # Install git
-$progress.NextStep("Install git")
-Install-App -Name "git" -Cmd "git"
+$progress.NextStep("Install git with openssh")
+Install-App -Name "git-with-openssh" -Cmd "git"
+[environment]::setEnvironmentVariable('HOME', $Env:UserProfile, 'User')
+New-Directory -Path (Join-Path $Env:UserProfile .ssh)
 
 # Add 'extras' scoop bucket
 $progress.NextStep("Add 'extras' scoop bucket")
@@ -141,9 +143,9 @@ $progress.NextStep("Install Python linter and formater")
 conda install --quiet -y yapf flake8
 deactivate
 
-# Install LVM
+# Install LLVM
 $progress.NextStep("Install LVM")
-Install-App -Name "lvm" -Cmd "clang"
+Install-App -Name "llvm" -Cmd "clang"
 
 # Install MinGW64
 $progress.NextStep("Install MinGW64")
