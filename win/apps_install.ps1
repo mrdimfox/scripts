@@ -11,6 +11,7 @@
             iex (new-object net.webclient).downloadstring('https://waa.ai/ol6t')
         to start this.
 #>
+param($EnableAgentOnlyMagicNumber=0)
 
 $ACTIVITY_NAME = "Apps installation"
 $STEPS_COUNT = 14
@@ -91,6 +92,17 @@ function Install-App {
     }
 }
 
+# If script was called only for an enabling a SSH Agent service
+$MAGIC_CONSTANT = 2384568923456  # any non zero number
+if ($EnableAgentOnlyMagicNumber -eq $MAGIC_CONSTANT) {
+    Write-Host "Enable SSH Agent service."
+    Set-Service -Name ssh-agent -StartupType Automatic
+
+    Write-Host "Start SSH Agent."
+    Start-Service ssh-agent
+    Exit 0
+}
+
 $TEMP_DOWNLOAD_FOLDER = (Join-Path $env:APPDATA Temp)
 $WIN_BUILD_TOOLS_URL = "https://aka.ms/vs/15/release/vs_buildtools.exe"
 
@@ -120,8 +132,10 @@ $isAgentStarted = `
     !((Get-Service ssh-agent | Select-Object -Property StartType).StartType -eq "Disabled")
 
 if (!($isAgentStarted)) {
-    Set-Service -Name ssh-agent -StartupType Automatic
-    Start-Service ssh-agent
+    if (Get-YesNoAnswer -Answer "Enable SSH Agent?") {
+        # Do a script self elevation and restart it with a MAGIC argument
+        if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" `"$MAGIC_CONSTANT`"" -Verb RunAs -Wait}
+    }
 }
 
 # Add 'extras' scoop bucket
