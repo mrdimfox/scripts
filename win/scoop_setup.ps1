@@ -16,6 +16,8 @@ param($SetGlobalOnlyMagicNumber=0)
 $ACTIVITY_NAME = "Scoop installation"
 $STEPS_COUNT = 7
 
+$ErrorActionPreference = "Stop"
+
 function New-Directory ($path) {
     if (!(Test-Path -Path $path)) {
         New-Item -ItemType Directory -Force -Path $path    

@@ -10,6 +10,8 @@
 $ACTIVITY_NAME = "Apps installation"
 $STEPS_COUNT = 13
 
+$ErrorActionPreference = "Stop"
+
 class Progress
 {
     [int32]$CurrentStep = 0
