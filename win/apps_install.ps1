@@ -1,3 +1,12 @@
+<#  
+    .SYNOPSIS
+        This script installs some apps and dev tools using Scoop
+    
+    .DESCRIPTION
+        It installs 7zip, git, miniconda3, lvm (clang), mingw64 (gcc),
+        gcc-arm-none-eabi, rust and Windows Build Tools.
+#>
+
 $ACTIVITY_NAME = "Apps installation"
 $STEPS_COUNT = 13
 

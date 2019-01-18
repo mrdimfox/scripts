@@ -1,3 +1,16 @@
+<#  
+    .SYNOPSIS
+        This script installs Scoop package manage into %appdata%/scoop dir
+    
+    .DESCRIPTION
+        For a proper script work you should enable a Developer mode on you PC.
+        After this script is started it creates folder "scoop" in %appdata%
+        directory. Scoop itself and local programs will be installed into
+        "local" subdir. If you want to change a global path for Scoop script
+        will ask you about an admin's rights. Global path will se set as 
+        %appdata%/scoop/global.
+#>
+
 param($SetGlobalOnlyMagicNumber=0)
 
 $ACTIVITY_NAME = "Scoop installation"
