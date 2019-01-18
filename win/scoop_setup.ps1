@@ -32,8 +32,8 @@ function New-Directory ($path) {
 function Test-DeveloperMode {
     if (!(Get-WindowsDeveloperLicense).IsValid) {
         throw `
-            'You should enable Developer mode to '`
-            + 'make symbolic links without '`
+            'You should enable Developer mode to ' `
+            + 'make symbolic links without ' `
             + 'admin privileges!'
     }
 }
@@ -112,7 +112,7 @@ $MAGIC_CONSTANT = 48576839746  # any non zero number
 if ($SetGlobalOnlyMagicNumber -eq $MAGIC_CONSTANT) {
     Write-Host "Set soop global installation path to a $globalScoopFolderPath."
 
-    [environment]::setEnvironmentVariable(`
+    [environment]::setEnvironmentVariable( `
         'SCOOP_GLOBAL', $globalScoopFolderPath, 'Machine')
     $env:SCOOP_GLOBAL = $globalScoopFolderPath
 
@@ -127,8 +127,8 @@ $progress.NextStep("Check PowerShell version")
 $psVer = $psVersionTable.psVersion
 if ($psVer.Major -lt 3) {
     throw `
-        "Scoop only works with Powershell 3 "`
-        + "and move newer versions. You have "`
+        "Scoop only works with Powershell 3 " `
+        + "and move newer versions. You have " `
         + "$psVer."
 }
 
@@ -150,8 +150,8 @@ if (!(Test-Path -Path $programDataSymbolicPath)) {
     Test-DeveloperMode
 
     New-SymbolicLink -From $programDataAbsPath -To $programDataSymbolicPath
-    Write-Host`
-        "$programDataSymbolicPath -> $programDataSymbolicPath "`
+    Write-Host `
+        "$programDataSymbolicPath -> $programDataSymbolicPath " `
         + "symlink was created."
 }
 
@@ -184,13 +184,13 @@ if ($initGlobal) {
 
 # Print final message
 $progress.NextStep("Finish")
-$finalMsg =`
+$finalMsg = `
     "`nScript work is succesfully finished.`n"`
     + "Scoop was installed to a folder:`n"`
     + "    $env:SCOOP"
 
 if ($initGlobal) {
-    $finalMsg`
+    $finalMsg `
         = "$finalMsg`nGlobal installation folder is`n"`
         + "    $env:SCOOP_GLOBAL"
 }
