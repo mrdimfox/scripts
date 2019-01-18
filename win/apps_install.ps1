@@ -117,7 +117,7 @@ New-Directory -Path (Join-Path $Env:UserProfile .ssh)
 # Enable SSH Agent
 $progress.NextStep("Enable SSH Agent")
 $isAgentStarted = `
-    !((Get-Service ssh-agent | Select-Object -Property StartType).StartType == "Disabled")
+    !((Get-Service ssh-agent | Select-Object -Property StartType).StartType -eq "Disabled")
 
 if (!($isAgentStarted)) {
     Set-Service -Name ssh-agent -StartupType Automatic
