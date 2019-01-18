@@ -9,6 +9,11 @@
         "local" subdir. If you want to change a global path for Scoop script
         will ask you about an admin's rights. Global path will se set as 
         %appdata%/scoop/global.
+
+    .NOTE 
+        Use
+            iex (new-object net.webclient).downloadstring('https://waa.ai/ol6e')
+        to start this script
 #>
 
 param($SetGlobalOnlyMagicNumber=0)

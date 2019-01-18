@@ -5,6 +5,11 @@
     .DESCRIPTION
         It installs 7zip, git, miniconda3, lvm (clang), mingw64 (gcc),
         gcc-arm-none-eabi, rust and Windows Build Tools.
+
+    .NOTE
+        Use
+            iex (new-object net.webclient).downloadstring('https://waa.ai/ol6t')
+        to start this.
 #>
 
 $ACTIVITY_NAME = "Apps installation"
