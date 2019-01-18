@@ -127,7 +127,7 @@ $condaActivatePs1 = [io.path]::combine($condaPath, "Scripts", "activate.ps1")
 if (!(Test-Path -Path $condaActivatePs1)) {
     Start-Process 'cmd' -ArgumentList `
         ("/K $condaActivateBat $condaPath && " `
-        + "conda install -y -n root -c pscondaenvs pscondaenvs && "`
+        + "conda install -y -n root -c pscondaenvs pscondaenvs && " `
         + "exit") -Wait
 
     &$condaActivatePs1 base
