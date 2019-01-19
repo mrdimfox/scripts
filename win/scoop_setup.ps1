@@ -180,6 +180,10 @@ if ($initGlobal) {
     $env:SCOOP_GLOBAL = $globalScoopFolderPath
     # Do a script self elevation and restart it with a MAGIC argument
     if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" `"$MAGIC_CONSTANT`"" -Verb RunAs -Wait}
+    else {
+        [environment]::setEnvironmentVariable( `
+            'SCOOP_GLOBAL', $globalScoopFolderPath, 'Machine')
+    }
 }
 
 # Print final message
