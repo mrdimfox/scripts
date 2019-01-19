@@ -23,9 +23,9 @@ $STEPS_COUNT = 7
 
 $ErrorActionPreference = "Stop"
 
-function New-Directory ($path) {
-    if (!(Test-Path -Path $path)) {
-        New-Item -ItemType Directory -Force -Path $path    
+function New-Directory ($Path) {
+    if (!(Test-Path -Path $Path)) {
+        New-Item -ItemType Directory -Force -Path $Path    
     }
 }
 
@@ -98,23 +98,26 @@ $progress = [Progress]::new($ACTIVITY_NAME, $STEPS_COUNT)
 
 $programDataSymbolicPath = (Join-Path $Env:UserProfile ".opt")
 $programDataAbsPath = $env:APPDATA
+$globalScoopAbsPath = (Join-Path $env:SystemDrive "ScoopGlobal")
 
 $localScoopFolderPath = `
-    ([io.path]::combine(
-        $env:SCOOP, $programDataSymbolicPath, "scoop", "local"))
+    ([io.path]::combine($programDataSymbolicPath, "scoop", "local"))
 $globalScoopFolderPath = `
-    ([io.path]::combine(
-        $env:SCOOP, $programDataSymbolicPath, "scoop", "global"))
+    ([io.path]::combine($programDataSymbolicPath, "scoop", "global"))
 
 
 # If script was called only for a global scoop path setup
 $MAGIC_CONSTANT = 48576839746  # any non zero number
 if ($SetGlobalOnlyMagicNumber -eq $MAGIC_CONSTANT) {
-    Write-Host "Set soop global installation path to a $globalScoopFolderPath."
+    Write-Host "Set soop global installation path to a $globalScoopAbsPath."
 
-    [environment]::setEnvironmentVariable( `
-        'SCOOP_GLOBAL', $globalScoopFolderPath, 'Machine')
-    $env:SCOOP_GLOBAL = $globalScoopFolderPath
+    [environment]::setEnvironmentVariable('SCOOP_GLOBAL', $globalScoopAbsPath, 'Machine')
+    $env:SCOOP_GLOBAL = $globalScoopAbsPath
+
+    New-Directory -Path $globalScoopAbsPath
+    if (!(Test-Path -Path $globalScoopFolderPath)) {
+        New-SymbolicLink -From $globalScoopAbsPath -To $globalScoopFolderPath
+    }
 
     Write-Host "Script work is succesfully finished!"
     Write-Host "Global installation folder is $env:SCOOP_GLOBAL"
@@ -177,7 +180,7 @@ Write-Host "Scoop installation is finished."
 $progress.NextStep("Setup a global install path for scoop")
 $initGlobal = (Get-YesNoAnswer -Answer "Setup a global setup path now?")
 if ($initGlobal) {
-    $env:SCOOP_GLOBAL = $globalScoopFolderPath
+    $env:SCOOP_GLOBAL = $globalScoopAbsPath
     # Do a script self elevation and restart it with a MAGIC argument
     if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" `"$MAGIC_CONSTANT`"" -Verb RunAs -Wait}
     else {
