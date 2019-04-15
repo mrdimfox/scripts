@@ -8,7 +8,7 @@
         directory. Scoop itself and local programs will be installed into
         "local" subdir. If you want to change a global path for Scoop script
         will ask you about an admin's rights. Global path will se set as 
-        %appdata%/scoop/global.
+        "C:/ScoopGlobal".
 
     .NOTE 
         Use
