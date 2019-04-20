@@ -146,27 +146,8 @@ $progress.NextStep("Install miniconda")
 Install-App -Name "miniconda3" -Cmd "conda"
 
 # Install conda PowerShell extensions
-$progress.NextStep("Install conda PowerShell extensions")
-$condaPath = [io.path]::combine($env:SCOOP, "apps", "miniconda3", "current")
-$condaActivateBat = [io.path]::combine($condaPath, "Scripts", "activate.bat")
-$condaActivatePs1 = [io.path]::combine($condaPath, "Scripts", "activate.ps1")
-
-if (!(Test-Path -Path $condaActivatePs1)) {
-    Start-Process 'cmd' -ArgumentList `
-        ("/K $condaActivateBat $condaPath && " `
-        + "conda install -y -n root -c pscondaenvs pscondaenvs && " `
-        + "exit") -Wait
-
-    &$condaActivatePs1 base
-}
-else {
-    activate base
-}
-
-# Install Python linter and formater
-$progress.NextStep("Install Python linter and formater")
-conda install --quiet -y yapf flake8
-deactivate
+$progress.NextStep("Init conda env")
+conda init
 
 # Install LLVM
 $progress.NextStep("Install LVM")
@@ -175,6 +156,10 @@ Install-App -Name "llvm" -Cmd "clang"
 # Install MinGW64
 $progress.NextStep("Install MinGW64")
 Install-App -Name "gcc" -Cmd "gcc"
+
+# Install Ninja
+$progress.NextStep("Install MinGW64")
+Install-App -Name "ninja" -Cmd "ninja"
 
 # Install GCC Arm
 $progress.NextStep("Install GCC Arm")
