@@ -18,8 +18,7 @@ $STEPS_COUNT = 14
 
 $ErrorActionPreference = "Stop"
 
-class Progress
-{
+class Progress {
     [int32]$CurrentStep = 0
     [int32]$StepsCount = 0
     [string]$Activity = ""
@@ -29,13 +28,13 @@ class Progress
         $this.StepsCount = $StepsCount
     }
 
-    NextStep([string]$Status){
+    NextStep([string]$Status) {
         $percentComplete = (100 / $this.StepsCount) * $this.CurrentStep
         $this.CurrentStep = $this.currentStep + 1
     
         Write-Progress -Activity $this.Activity `
-                       -Status "$Status" `
-                       -PercentComplete $percentComplete
+            -Status "$Status" `
+            -PercentComplete $percentComplete
         
         Start-Sleep -Milliseconds 100
     }
