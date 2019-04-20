@@ -11,7 +11,7 @@
             iex (new-object net.webclient).downloadstring('https://waa.ai/ol6t')
         to start this.
 #>
-param($EnableAgentOnlyMagicNumber=0)
+param($InstallArmGccOnlyMagicNumber = 0)
 
 $ACTIVITY_NAME = "Apps installation"
 $STEPS_COUNT = 14
@@ -72,15 +72,16 @@ function Test-App ([string]$Name) {
 function Install-App {
     param (
         [string]$Name,
-        [string]$Cmd
+        [string]$Cmd,
+        [string]$InstallationCmd = "scoop install"
     )
     
     if (!(Test-App -Name $Cmd)) {
-        scoop install $Name
+        Invoke-Expression -Command (@($InstallationCmd, $Name) -join ' ')
     }
     else {
         Write-Warning -Message `
-                ("$Name is already in path! " `
+        ("$Name is already in path! " `
                 + "Installation will be skipped.")
 
         $continue = Get-YesNoAnswer -Answer "Continue installation?"
@@ -91,14 +92,41 @@ function Install-App {
     }
 }
 
-# If script was called only for an enabling a SSH Agent service
-$MAGIC_CONSTANT = 2384568923456  # any non zero number
-if ($EnableAgentOnlyMagicNumber -eq $MAGIC_CONSTANT) {
-    Write-Host "Enable SSH Agent service."
-    Set-Service -Name ssh-agent -StartupType Automatic
+# Import add/remove path funcs
+Invoke-Expression -Command (New-Object Net.WebClient).downloadstring('https://waa.ai/o5ix')
 
-    Write-Host "Start SSH Agent."
-    Start-Service ssh-agent
+function Install-GccArm {
+    Write-Host "Install nodejs."
+    Install-App -Name "nodejs" -Cmd "npm"
+
+    Write-Host "Install xpm with npm."
+    npm install --global xpm
+
+    Write-Host "Install arm-none-eabi-gcc with xpm."
+    xpm install --global @gnu-mcu-eclipse/arm-none-eabi-gcc
+
+    $armGccPath = [io.path]::combine($Env:UserProfile, `
+            "AppData", "Roaming", "xPacks", "@gnu-mcu-eclipse", `
+            "arm-none-eabi-gcc")
+
+    $armGccVersionFolder = $(Get-ChildItem -Path $armGccPath).Name
+    if ([string]::IsNullOrEmpty($armGccVersionFolder)) {
+        Write-Error -Message "arm-none-eabi-gcc package is not installed!" `
+            "Something gone wrong :("
+        $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+    }
+
+    $armGccPath = [io.path]::combine($armGccPath, $armGccVersionFolder, `
+            ".content", "bin")
+
+    Write-Host "Add $armGccPath to PATH."
+    Add-EnvPath -Path $armGccPath -Container 'User'
+}
+
+# If script was called only for an installing xpm and arm-none-eabi-gcc
+$MAGIC_CONSTANT_ARM_GCC = 2384568923456  # any non zero number
+if ($InstallArmGccOnlyMagicNumber -eq $MAGIC_CONSTANT_ARM_GCC) {
+    Install-GccArm
     Exit 0
 }
 
@@ -163,7 +191,15 @@ Install-App -Name "ninja" -Cmd "ninja"
 
 # Install GCC Arm
 $progress.NextStep("Install GCC Arm")
-Install-App -Name "gcc-arm-none-eabi" -Cmd "arm-none-eabi-gcc"
+Write-Host "GCC Arm needs to be installed from xpm (another package manager) which should be installed from npm."
+$installGccArm = (Get-YesNoAnswer -Answer "Install GCC Arm toolchain now?")
+if ($installGccArm) {
+    # Do a script self elevation and restart it with a MAGIC argument
+    if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" `"$MAGIC_CONSTANT_ARM_GCC`"" -Verb RunAs -Wait }
+    else {
+        Install-GccArm
+    }
+}
 
 # Install RustUp
 $progress.NextStep("Install RustUp")
