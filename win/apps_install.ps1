@@ -136,8 +136,7 @@ $WIN_BUILD_TOOLS_URL = "https://aka.ms/vs/15/release/vs_buildtools.exe"
 $progress = [Progress]::new($ACTIVITY_NAME, $STEPS_COUNT)
 
 $progress.NextStep("Check if Scoop exists")
-if (!(Test-App -Name "scoop"))
-{
+if (!(Test-App -Name "scoop")) {
     throw "Scoop is not installed! Install it first."
 }
 
@@ -145,29 +144,22 @@ if (!(Test-App -Name "scoop"))
 $progress.NextStep("Install 7zip")
 Install-App -Name "7zip" -Cmd "7z"
 
+
 # Install git
-$progress.NextStep("Install git with openssh")
-Install-App -Name "git-with-openssh" -Cmd "git"
+$progress.NextStep("Install git")
+Install-App -Name "git" -Cmd "git"
 Install-App -Name "git-lfs" -Cmd "git lfs"
-[environment]::setEnvironmentVariable('HOME', $Env:UserProfile, 'User')
-[environment]::setEnvironmentVariable('GIT_SSH', (resolve-path (scoop which ssh)), 'User')
-New-Directory -Path (Join-Path $Env:UserProfile .ssh)
-
-# Enable SSH Agent
-$progress.NextStep("Enable SSH Agent")
-$isAgentStarted = `
-    !((Get-Service ssh-agent | Select-Object -Property StartType).StartType -eq "Disabled")
-
-if (!($isAgentStarted)) {
-    if (Get-YesNoAnswer -Answer "Enable SSH Agent?") {
-        # Do a script self elevation and restart it with a MAGIC argument
-        if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" `"$MAGIC_CONSTANT`"" -Verb RunAs -Wait}
-    }
-}
 
 # Add 'extras' scoop bucket
 $progress.NextStep("Add 'extras' scoop bucket")
 scoop bucket add extras
+
+# Install git
+$progress.NextStep("Install pagent (putty)")
+Install-App -Name "putty" -Cmd "plink"
+[environment]::setEnvironmentVariable('HOME', $Env:UserProfile, 'User')
+[environment]::setEnvironmentVariable('GIT_SSH', (resolve-path (scoop which plink)), 'User')
+New-Directory -Path (Join-Path $Env:UserProfile .ssh)
 
 # Install miniconda
 $progress.NextStep("Install miniconda")
@@ -214,8 +206,8 @@ if ((Get-YesNoAnswer -Answer "Install Windows Build Tools?")) {
     $wc.DownloadFile($WIN_BUILD_TOOLS_URL, $buildTools)
 
     $buildToolsArgs = @("--passive", "--wait", "--norestart", "--nocache", 
-                        "--add", "Microsoft.VisualStudio.Workload.VCTools",
-                        "--includeRecommended")
+        "--add", "Microsoft.VisualStudio.Workload.VCTools",
+        "--includeRecommended")
     Start-Process -Filepath $buildTools -ArgumentList $buildToolsArgs -Verb runas -Wait
     Remove-Item $TEMP_DOWNLOAD_FOLDER -Recurse
 }
@@ -223,7 +215,7 @@ if ((Get-YesNoAnswer -Answer "Install Windows Build Tools?")) {
 # Select rust toolchain
 $progress.NextStep("Select rust toolchain")
 $setMsvcRust = `
-    (Get-YesNoAnswer -Answer `
+(Get-YesNoAnswer -Answer `
         "Change rust toolchain to stable-x86_64-pc-windows-msvc?")
 if ($setMsvcRust) {
     rustup default stable-x86_64-pc-windows-msvc
