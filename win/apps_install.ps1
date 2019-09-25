@@ -178,20 +178,23 @@ $progress.NextStep("Install MinGW64")
 Install-App -Name "gcc" -Cmd "gcc"
 
 # Install Ninja
-$progress.NextStep("Install MinGW64")
+$progress.NextStep("Install Ninja")
 Install-App -Name "ninja" -Cmd "ninja"
 
 # Install GCC Arm
 $progress.NextStep("Install GCC Arm")
-Write-Host "GCC Arm needs to be installed from xpm (another package manager) which should be installed from npm."
-$installGccArm = (Get-YesNoAnswer -Answer "Install GCC Arm toolchain now?")
-if ($installGccArm) {
-    # Do a script self elevation and restart it with a MAGIC argument
-    if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" `"$MAGIC_CONSTANT_ARM_GCC`"" -Verb RunAs -Wait }
-    else {
-        Install-GccArm
-    }
-}
+Install-App -Name "gcc-arm-none-eabi" -Cmd "arm-none-eabi-gcc"
+
+# Alternative way to install GCC Arm
+#Write-Host "GCC Arm needs to be installed from xpm (another package manager) which should be installed from npm."
+#$installGccArm = (Get-YesNoAnswer -Answer "Install GCC Arm toolchain now?")
+#if ($installGccArm) {
+#    # Do a script self elevation and restart it with a MAGIC argument
+#    if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" `"$MAGIC_CONSTANT_ARM_GCC`"" -Verb RunAs -Wait }
+#    else {
+#        Install-GccArm
+#    }
+#}
 
 # Install RustUp
 $progress.NextStep("Install RustUp")
