@@ -181,6 +181,10 @@ Install-App -Name "gcc" -Cmd "gcc"
 $progress.NextStep("Install Ninja")
 Install-App -Name "ninja" -Cmd "ninja"
 
+# Install CMake
+$progress.NextStep("Install CMake")
+Install-App -Name "cmake" -Cmd "cmake"
+
 # Install GCC Arm
 $progress.NextStep("Install GCC Arm")
 Install-App -Name "gcc-arm-none-eabi" -Cmd "arm-none-eabi-gcc"
