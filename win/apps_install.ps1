@@ -150,9 +150,11 @@ $progress.NextStep("Install git")
 Install-App -Name "git" -Cmd "git"
 Install-App -Name "git-lfs" -Cmd "git lfs"
 
-# Add 'extras' scoop bucket
-$progress.NextStep("Add 'extras' scoop bucket")
+# Add additional scoop bucket
+$progress.NextStep("Add 'extras', 'nonportable' and 'nirsoft' scoop buckets")
 scoop bucket add extras
+scoop bucket add nonportable
+scoop bucket add nirsoft
 
 # Install git
 $progress.NextStep("Install pagent (putty)")
