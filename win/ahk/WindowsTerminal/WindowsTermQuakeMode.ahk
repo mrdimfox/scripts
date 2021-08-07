@@ -1,3 +1,5 @@
+; Original script source: https://gist.github.com/andrewgodwin/89920ee02501ab12d09b02500897066c
+
 ; How much height of screen size the terminal window takes.
 VRatio := 0.6
 ; The path to the Windows Terminal exe file.
