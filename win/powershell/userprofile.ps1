@@ -26,4 +26,5 @@ Import-Module PSReadLine
 Set-PSReadLineOption -EditMode Windows
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -PredictionViewStyle ListView
-Set-PSReadLineOption -PredictionViewStyle InlineView
+# Bash-like view↓
+# Set-PSReadLineOption -PredictionViewStyle InlineView
