@@ -1,7 +1,7 @@
 <#  
     .SYNOPSIS
         This script installs Scoop package manage into %appdata%/scoop dir
-    
+
     .DESCRIPTION
         For a proper script work you should enable a Developer mode on you PC.
         After this script is started it creates folder "scoop" in %appdata%
@@ -12,8 +12,11 @@
 
     .NOTE 
         Use
-            iex (new-object net.webclient).downloadstring('https://waa.ai/ol6e')
-        to start this script
+            iex (new-object net.webclient).downloadstring('<URL>')
+        to start this script. Place actual URL instead of <URL>.
+
+        URL example:
+            https://github.com/mrdimfox/scripts/blob/master/win/setup/scoop_setup.ps1
 #>
 
 param($SetGlobalOnlyMagicNumber=0)
@@ -34,7 +37,8 @@ function Test-DeveloperMode {
         throw `
             'You should enable Developer mode to ' `
             + 'make symbolic links without ' `
-            + 'admin privileges!'
+            + 'admin privileges!' `
+            + 'see more: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development'
     }
 }
 
