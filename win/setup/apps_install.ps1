@@ -96,7 +96,8 @@ function Install-App {
 }
 
 # Import add/remove path funcs
-Invoke-Expression -Command (New-Object Net.WebClient).downloadstring('https://waa.ai/o5ix')
+$ENV_PATHS_MODULE = "https://gist.githubusercontent.com/mrdimfox/d9df7082fb464289cfc901b94a68a3f2/raw/ee179622d2324ffc1bf1ecdf7b23d1fdb5423ed7/EnvPaths.psm1"
+Invoke-Expression -Command (New-Object Net.WebClient).downloadstring($ENV_PATHS_MODULE)
 
 function Install-GccArm {
     Write-Host "Install nodejs."
