@@ -8,8 +8,11 @@
 
     .NOTE
         Use
-            iex (new-object net.webclient).downloadstring('https://waa.ai/ol6t')
-        to start this.
+            iex (new-object net.webclient).downloadstring('<URL>')
+        to start this script. Place actual URL instead of <URL>.
+
+        URL example:
+            https://github.com/mrdimfox/scripts/blob/master/win/setup/apps_install.ps1
 #>
 param($InstallArmGccOnlyMagicNumber = 0)
 
