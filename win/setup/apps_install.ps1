@@ -135,7 +135,7 @@ if ($InstallArmGccOnlyMagicNumber -eq $MAGIC_CONSTANT_ARM_GCC) {
 }
 
 $TEMP_DOWNLOAD_FOLDER = (Join-Path $env:APPDATA Temp)
-$WIN_BUILD_TOOLS_URL = "https://aka.ms/vs/15/release/vs_buildtools.exe"
+$WIN_BUILD_TOOLS_URL = "https://aka.ms/vs/17/release/vs_buildtools.exe"
 
 $progress = [Progress]::new($ACTIVITY_NAME, $STEPS_COUNT)
 
