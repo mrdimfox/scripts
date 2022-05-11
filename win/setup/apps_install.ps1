@@ -6,7 +6,7 @@
         It installs 7zip, git, miniconda3, llvm (clang), mingw64 (gcc),
         gcc-arm-none-eabi, rust and Windows Build Tools.
 
-    .NOTE
+    .NOTE 
         Use
             iex (new-object net.webclient).downloadstring('<URL>')
         to start this script. Place actual URL instead of <URL>.
@@ -17,7 +17,7 @@
 param($InstallArmGccOnlyMagicNumber = 0)
 
 $ACTIVITY_NAME = "Apps installation"
-$STEPS_COUNT = 14
+$STEPS_COUNT = 13
 
 $ErrorActionPreference = "Stop"
 
@@ -160,20 +160,13 @@ scoop bucket add extras
 scoop bucket add nonportable
 scoop bucket add nirsoft
 
-# Install git
-$progress.NextStep("Install pagent (putty)")
-Install-App -Name "putty" -Cmd "plink"
-[environment]::setEnvironmentVariable('HOME', $Env:UserProfile, 'User')
-[environment]::setEnvironmentVariable('GIT_SSH', (resolve-path (scoop which plink)), 'User')
-New-Directory -Path (Join-Path $Env:UserProfile .ssh)
-
-# Install miniconda
-$progress.NextStep("Install miniconda")
-Install-App -Name "miniconda3" -Cmd "conda"
-
-# Install conda PowerShell extensions
-$progress.NextStep("Init conda env")
-conda init
+# Setup git to use Windows OpenSSH client
+$progress.NextStep("Setup git to use Windows OpenSSH client")
+if ((Get-YesNoAnswer -Answer "Do setup?")) {
+    [environment]::setEnvironmentVariable('HOME', $Env:UserProfile, 'User')
+    [environment]::setEnvironmentVariable('GIT_SSH', (resolve-path (scoop which ssh)), 'User')
+    New-Directory -Path (Join-Path $Env:UserProfile .ssh)
+}
 
 # Install LLVM
 $progress.NextStep("Install LVM")
