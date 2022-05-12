@@ -10,10 +10,9 @@ if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
 
-# -- Oh My Posh config (https://ohmyposh.dev/docs/pwsh)
-Import-Module posh-git
-Import-Module oh-my-posh
-Set-PoshPrompt -Theme amro
+# -- Oh My Posh config
+$POSH_THEME = "$env:POSH_THEMES_PATH\amro.omp.json"
+oh-my-posh init pwsh --config $POSH_THEME | Invoke-Expression
 
 # -- Starship config
 $env:STARSHIP_CONFIG = "$HOME\.starship"
