@@ -4,9 +4,10 @@
     
     .DESCRIPTION
         It installs 7zip, git, miniconda3, llvm (clang), mingw64 (gcc),
-        gcc-arm-none-eabi, rust and Windows Build Tools.
+        gcc-arm-none-eabi, rust, nodejs, yarn and Windows Build Tools.
+        Also setup git to work with OpenSSH.
 
-    .NOTE 
+    .NOTES
         Use
             iex (new-object net.webclient).downloadstring('<URL>')
         to start this script. Place actual URL instead of <URL>.

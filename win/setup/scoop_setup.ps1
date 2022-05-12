@@ -10,7 +10,7 @@
         will ask you about an admin's rights. Global path will se set as 
         "C:/ScoopGlobal".
 
-    .NOTE 
+    .NOTES
         Use
             iex (new-object net.webclient).downloadstring('<URL>')
         to start this script. Place actual URL instead of <URL>.
