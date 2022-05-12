@@ -8,3 +8,5 @@ These scripts can be used for simplify windows stuff.
 - `utils/Set-ClipboardImage.ps1` — copy png images into clipboard by path.
 - `ahk/CapsLangSwitch` — switch a lang with CapsLock (`Ctrl+Shift` keys must be set for lang switching in Windows settings).
 - `ahk/WindowsTermQuakeMode` — show Windows Terminal in [Guake](http://guake-project.org/) mode (`Win+Grave` keys is used).
+
+Use ahk2exe to compile ahk-scripts into exe files.

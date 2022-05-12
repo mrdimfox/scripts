@@ -1,7 +1,10 @@
 ; Original script source: https://gist.github.com/andrewgodwin/89920ee02501ab12d09b02500897066c
 
 ; How much height of screen size the terminal window takes.
-VRatio := 0.6
+VRatio := 0.7
+; How much width of screen size the terminal window takes.
+HRatio := 0.75
+
 ; The path to the Windows Terminal exe file.
 WtPath = "%LOCALAPPDATA%\Microsoft\WindowsApps\wt.exe"
 
@@ -42,8 +45,9 @@ ShowAndPositionTerminal()
     ScreenHeight := A_ScreenHeight
 
     global VRatio
+    global HRatio
 
-    WinWidth := ScreenWidth - 0.4 * ScreenWidth
+    WinWidth := ScreenWidth - (1 - HRatio) * ScreenWidth
     WinHeight := ScreenHeight * VRatio
     WinX := ScreenX + (ScreenWidth - WinWidth) / 2 + 25
     WinY := ScreenY - 10
