@@ -17,7 +17,7 @@
 param($InstallArmGccOnlyMagicNumber = 0)
 
 $ACTIVITY_NAME = "Apps installation"
-$STEPS_COUNT = 13
+$STEPS_COUNT = 14
 
 $ErrorActionPreference = "Stop"
 
@@ -226,6 +226,11 @@ $setMsvcRust = `
 if ($setMsvcRust) {
     rustup default stable-x86_64-pc-windows-msvc
 }
+
+# Install Web tools
+$progress.NextStep("Install NodeJS and Yarn")
+Install-App -Name "nodejs" -Cmd "npm"
+Install-App -Name "yarn" -Cmd "yarn"
 
 
 Write-Host "`n`nScript work is succesfully finished!" -ForegroundColor Green
