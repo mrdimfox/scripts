@@ -34,3 +34,6 @@ Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -PredictionViewStyle ListView
 # Bash-like view↓
 # Set-PSReadLineOption -PredictionViewStyle InlineView
+
+# Coloring some standart utils (like ls)
+Import-Module PSColor
