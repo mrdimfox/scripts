@@ -18,7 +18,14 @@ oh-my-posh init pwsh --config $POSH_THEME | Invoke-Expression
 $env:STARSHIP_CONFIG = "$HOME\.starship"
 
 # -- Scoop config
-Import-Module $env:SCOOP\modules\scoop-completion
+# enable completion in current shell, use absolute path because PowerShell Core not respect $env:PSModulePath
+$SOOP_COMPLETION_MODULE = "$($(Get-Item $(Get-Command scoop.ps1).Path).Directory.Parent.FullName)\modules\scoop-completion"
+if (Test-Path $SOOP_COMPLETION_MODULE) {
+    Import-Module $SOOP_COMPLETION_MODULE
+}
+else {
+    Write-Host "scoop-completion not installed."
+}
 
 # -- PSReadline config (https://blog.antosubash.com/posts/setting-up-powershell-with-oh-my-posh-v3)
 Import-Module PSReadLine
