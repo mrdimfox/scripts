@@ -12,7 +12,7 @@
         to start this script. Place actual URL instead of <URL>.
 
         URL example:
-            https://github.com/mrdimfox/scripts/blob/master/win/setup/apps_install.ps1
+            https://raw.githubusercontent.com/mrdimfox/scripts/master/win/setup/apps_install.ps1
 #>
 param($InstallArmGccOnlyMagicNumber = 0)
 

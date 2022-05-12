@@ -16,7 +16,7 @@
         to start this script. Place actual URL instead of <URL>.
 
         URL example:
-            https://github.com/mrdimfox/scripts/blob/master/win/setup/scoop_setup.ps1
+            https://raw.githubusercontent.com/mrdimfox/scripts/master/win/setup/scoop_setup.ps1
 #>
 
 param($SetGlobalOnlyMagicNumber=0)
