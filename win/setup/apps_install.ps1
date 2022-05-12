@@ -96,7 +96,7 @@ function Install-App {
 }
 
 # Import add/remove path funcs
-$ENV_PATHS_MODULE = "https://gist.githubusercontent.com/mrdimfox/d9df7082fb464289cfc901b94a68a3f2/raw/ee179622d2324ffc1bf1ecdf7b23d1fdb5423ed7/EnvPaths.psm1"
+$ENV_PATHS_MODULE = "https://gist.githubusercontent.com/mrdimfox/d9df7082fb464289cfc901b94a68a3f2/raw/697302c5757909c7e97671e934918ceed4a6db32/EnvPaths.ps1"
 Invoke-Expression -Command (New-Object Net.WebClient).downloadstring($ENV_PATHS_MODULE)
 
 function Install-GccArm {
