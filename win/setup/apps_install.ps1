@@ -162,7 +162,7 @@ scoop bucket add nirsoft
 
 # Setup git to use Windows OpenSSH client
 $progress.NextStep("Setup git to use Windows OpenSSH client")
-if ((Get-YesNoAnswer -Answer "Do setup?")) {
+if ((Get-YesNoAnswer -Answer "Do setup git to use Windows OpenSSH client?")) {
     [environment]::setEnvironmentVariable('HOME', $Env:UserProfile, 'User')
     [environment]::setEnvironmentVariable('GIT_SSH', (resolve-path (scoop which ssh)), 'User')
     New-Directory -Path (Join-Path $Env:UserProfile .ssh)
