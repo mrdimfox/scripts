@@ -3,7 +3,8 @@
         Install winget and install some apps using it
 
     .DESCRIPTION
-        Apps: Keepass, Docker, Telegram, VS Code, Steam, NextCloud client
+        Apps: Keepass, Docker, Telegram, VS Code, Steam, NextCloud client,
+              PowerToys, PotPlayer
 
     .EXAMPLE
         Use
@@ -58,6 +59,8 @@ function Invoke-Main() {
     winget install -h Nextcloud.NextcloudDesktop
     winget install -h Discord.Discord
     winget install -h qBittorrent.qBittorrent
+    winget install -h Microsoft.PowerToys
+    winget install -h Daum.PotPlayer
 
     Write-Host-Success "`nScript finished successfully!"
 }
