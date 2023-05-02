@@ -73,6 +73,7 @@ function Invoke-Main() {
     winget install -h --no-upgrade -s winget JanDeDobbeleer.OhMyPosh
     winget install -h --no-upgrade Mozilla.Firefox
     winget install -h --no-upgrade Microsoft.VisualStudioCode
+    winget install -h --no-upgrade JGraph.Draw
 
     # UI for winget
     winget install -h --no-upgrade SomePythonThings.WingetUIStore
