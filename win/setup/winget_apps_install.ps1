@@ -51,16 +51,29 @@ function Invoke-Main() {
 
     Write-Host "Apps installation started..."
 
-    winget install -h DominikReichl.KeePass
-    winget install -h Telegram.TelegramDesktop
-    winget install -h Microsoft.VisualStudioCode
-    winget install -h Docker.DockerDesktop
-    winget install -h Valve.Steam
-    winget install -h Nextcloud.NextcloudDesktop
-    winget install -h Discord.Discord
-    winget install -h qBittorrent.qBittorrent
-    winget install -h Microsoft.PowerToys
-    winget install -h Daum.PotPlayer
+    winget install -h --no-upgrade DominikReichl.KeePass
+    winget install -h --no-upgrade Telegram.TelegramDesktop
+    winget install -h --no-upgrade Microsoft.VisualStudioCode
+    winget install -h --no-upgrade Docker.DockerDesktop
+    winget install -h --no-upgrade Valve.Steam
+    winget install -h --no-upgrade Nextcloud.NextcloudDesktop
+    winget install -h --no-upgrade Discord.Discord
+    winget install -h --no-upgrade qBittorrent.qBittorrent
+    winget install -h --no-upgrade Microsoft.PowerToys
+    winget install -h --no-upgrade Daum.PotPlayer
+    # Adjust brightness for all monitors
+    winget install -h --no-upgrade xanderfrangos.twinkletray
+    # Screenshots maker
+    winget install -h --no-upgrade ShareX.ShareX
+    # Like Teamviewer but on Rust
+    winget install -h --no-upgrade RustDesk.RustDesk
+    winget install -h --no-upgrade Microsoft.WindowsTerminal.Preview
+    winget install -h --no-upgrade -s winget JanDeDobbeleer.OhMyPosh
+    winget install -h --no-upgrade Mozilla.Firefox
+    winget install -h --no-upgrade Microsoft.VisualStudioCode
+
+    # UI for winget
+    winget install -h --no-upgrade SomePythonThings.WingetUIStore
 
     Write-Host-Success "`nScript finished successfully!"
 }
