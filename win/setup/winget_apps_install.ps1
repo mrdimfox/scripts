@@ -63,6 +63,8 @@ function Invoke-Main() {
     winget install -h --no-upgrade Daum.PotPlayer
     # Adjust brightness for all monitors
     winget install -h --no-upgrade xanderfrangos.twinkletray
+    # Handy audio control
+    winget install -h --no-upgrade File-New-Project.EarTrumpet
     # Screenshots maker
     winget install -h --no-upgrade ShareX.ShareX
     # Like Teamviewer but on Rust
